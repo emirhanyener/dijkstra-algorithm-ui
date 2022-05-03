@@ -14,24 +14,35 @@ public class Node extends JButton{
 		status = 0;
 	}
 	
-	public void setPos(int x, int y) {
+	//getters setters
+	public void setNodePos(int x, int y) {
 		this.xPos = x;
 		this.yPos = y;
 	}
-	public void setVisited(Node parent) {
-		this.status = 2;
+	public void setNodeVisited(Node parent) {
+		this.status = 1;
 		parentNode = parent;
 	}
-	public void setNeighbour() {
+	public Node getNodeParent() {
+		return parentNode;
+	}
+	public void setNodeParent(Node parent) {
+		parentNode = parent;
 		this.status = 1;
 	}
-	public int getStatus() {
+	public int getNodeStatus() {
 		return this.status;
 	}
-	public int getX() {
+	public int getXPos() {
 		return this.xPos;
 	}
-	public int getY() {
+	public int getYPos() {
 		return this.yPos;
+	}
+	public void setXPos(int xPos) {
+		this.xPos = xPos;
+	}
+	public void setYPos(int yPos) {
+		this.yPos = yPos;
 	}
 }
