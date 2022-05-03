@@ -27,12 +27,15 @@ public class Window{
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 	        @Override
 	        public boolean dispatchKeyEvent(KeyEvent ke) {
-	                if( ke.getID() == KeyEvent.KEY_PRESSED) {
-	                    if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-	                		StepByStep();
-	                    }
-	                }
-	        		return true;
+                if( ke.getID() == KeyEvent.KEY_PRESSED) {
+                    if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
+                		StepByStep();
+                    }
+                    if (ke.getKeyCode() == KeyEvent.VK_R) {
+                		ResetAll();
+                    }
+                }
+        		return true;
 	        }
 	    });
 		
@@ -41,6 +44,24 @@ public class Window{
 		target = nodeArray[5][8];
 
 		SetNeighbour(nodeArray[0][0], null);
+	}
+	
+	public void ResetAll() {
+		isFounded = false;
+		//reset nodes
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				nodeArray[j][i].setBackground(Color.WHITE);
+				nodeArray[j][i].ResetNode();
+			}
+		}
+		
+		//clear neighbourList
+		System.out.println(neighbourList.size());
+		neighbourList.clear();
+		System.out.println(neighbourList.size());
+		SetNeighbour(nodeArray[0][0], null);
+		
 	}
 	
 	//create buttons and frame
@@ -56,6 +77,7 @@ public class Window{
 				node.setXPos(j);
 				node.setYPos(i);
 				nodeArray[j][i] = node;
+				nodeArray[j][i].setBackground(Color.WHITE);
 				node.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {

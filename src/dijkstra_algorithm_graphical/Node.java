@@ -14,6 +14,11 @@ public class Node extends JButton{
 		status = 0;
 	}
 	
+	public void ResetNode() {
+		status = 0;
+		parentNode = null;
+	}
+	
 	//getters setters
 	public void setNodePos(int x, int y) {
 		this.xPos = x;
