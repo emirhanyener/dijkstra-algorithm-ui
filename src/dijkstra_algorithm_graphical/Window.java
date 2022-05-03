@@ -19,9 +19,14 @@ public class Window{
 	private JFrame frame;
 	private boolean isFounded;
 	private Node tempNode;
+	private char mode = 'i';
 	
 	//init
 	public Window() {
+		frame = new JFrame("Dijkstra's Shortest Path Algorithm");
+		frame.setBounds(50, 50, 800, 590);
+		frame.setLayout(null);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		isFounded = false;
 		//for step by step pathfinding
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
@@ -33,6 +38,15 @@ public class Window{
                     }
                     if (ke.getKeyCode() == KeyEvent.VK_R) {
                 		ResetAll();
+                    }
+                    if (ke.getKeyCode() == KeyEvent.VK_T) {
+                		mode = 't';
+                    }
+                    if (ke.getKeyCode() == KeyEvent.VK_B) {
+                		mode = 'b';
+                    }
+                    if (ke.getKeyCode() == KeyEvent.VK_I) {
+                		mode = 'i';
                     }
                 }
         		return true;
@@ -66,10 +80,9 @@ public class Window{
 	
 	//create buttons and frame
 	public void InitWindow() {
-		frame = new JFrame("dijkstra algorithm");
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setBounds(50, 50, 500, 500);
-		frame.setLayout(new GridLayout(10,10));
+		JPanel panel = new JPanel();
+		panel.setBounds(25, 25, 500, 500);
+		panel.setLayout(new GridLayout(10,10));
 		
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -81,12 +94,13 @@ public class Window{
 				node.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						ShowNodeInfo(node);
+						NodeClickAction(node);
 					}
 				});
-				frame.add(node);
+				panel.add(node);
 			}
 		}
+		frame.add(panel);
 		frame.show();
 	}
 	
@@ -122,6 +136,8 @@ public class Window{
 				for (int j = -1; j < 2 && !isFounded; j++) {
 					if(neighbourList.get(0).getXPos() + j >= 0 && neighbourList.get(0).getXPos() + j < 10 && neighbourList.get(0).getYPos() + i >= 0 && neighbourList.get(0).getYPos() + i < 10) {
 						System.out.println("neighbour ( " + (neighbourList.get(0).getXPos() + j) +  ", "+ (neighbourList.get(0).getYPos() + i)+" ) : " + String.valueOf(isHasNode(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i])));
+						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i].getBlockState())
+							continue;
 						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i] == target){
 							isFounded = true;
 							JOptionPane.showMessageDialog(null, "target founded");
@@ -149,6 +165,18 @@ public class Window{
 		}
 	}
 	
+	public void NodeClickAction(Node node) {
+		if(mode == 'i') {
+			ShowNodeInfo(node);
+		}
+		if(mode == 't') {
+			SetTarget(node);
+		}
+		if(mode == 'b') {
+			SetBlock(node);
+		}
+	}
+	
 	//node info method
 	public void ShowNodeInfo(Node node) {
 		//JOptionPane.showMessageDialog(null, "Node parent : (" + String.valueOf(nodeArray[0][0].getXPos()));
@@ -156,5 +184,15 @@ public class Window{
 			JOptionPane.showMessageDialog(null, "Node parent : (null)\nXPos : " + String.valueOf(node.getXPos()) + "\nYPos : " + String.valueOf(node.getYPos()));
 		else
 			JOptionPane.showMessageDialog(null, "Node parent : (" + String.valueOf(node.getNodeParent().getXPos()) + ", " + String.valueOf(node.getNodeParent().getYPos()) + ")\nXPos : " + String.valueOf(node.getXPos()) + "\nYPos : " + String.valueOf(node.getYPos()));
+	}
+	
+	public void SetTarget(Node node) {
+		target.setBackground(Color.WHITE);
+		target = node;
+		target.setBackground(Color.GREEN);
+	}
+	
+	public void SetBlock(Node node) {
+		node.ChangeBlockState();
 	}
 }

@@ -1,5 +1,7 @@
 package dijkstra_algorithm_graphical;
 
+import java.awt.Color;
+
 import javax.swing.JButton;
 
 public class Node extends JButton{
@@ -7,9 +9,11 @@ public class Node extends JButton{
 	private int status;
 	private int xPos;
 	private int yPos;
+	private boolean isBlock;
 	
 	Node(){
 		super();
+		isBlock = false;
 		parentNode = null;
 		status = 0;
 	}
@@ -49,5 +53,15 @@ public class Node extends JButton{
 	}
 	public void setYPos(int yPos) {
 		this.yPos = yPos;
+	}
+	public void ChangeBlockState() {
+		isBlock = !isBlock;
+		if(isBlock)
+			this.setBackground(Color.BLACK);
+		else
+			this.setBackground(Color.WHITE);
+	}
+	public boolean getBlockState() {
+		return isBlock;
 	}
 }
