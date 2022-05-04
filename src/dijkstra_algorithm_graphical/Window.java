@@ -16,11 +16,14 @@ public class Window{
 	private Node[][] nodeArray = new Node[10][10];
 	private List<Node> neighbourList = new ArrayList<Node>();
 	private Node target;
+	private Node start;
 	private JFrame frame;
 	private boolean isFounded;
 	private Node tempNode;
 	private char mode = 'i';
 	private JLabel statusLabel;
+	private JLabel startLabel;
+	private JLabel targetLabel;
 	
 	//init
 	public Window() {
@@ -32,9 +35,12 @@ public class Window{
 		panel.setBounds(550, 25, 200, 500);
 		panel.setLayout(new GridLayout(10,1));
 		frame.add(panel);
+		
 		statusLabel = new JLabel();
-		statusLabel.setText("Click Mode : Info");
+		statusLabel.setText("Click Mode : INFO");
 		panel.add(statusLabel);
+		
+		
 		isFounded = false;
 		//for step by step pathfinding
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
@@ -49,12 +55,19 @@ public class Window{
                     }
                     if (ke.getKeyCode() == KeyEvent.VK_T) {
                 		mode = 't';
+                		statusLabel.setText("Click Mode : TARGET NODE");
+                    }
+                    if (ke.getKeyCode() == KeyEvent.VK_S) {
+                		mode = 's';
+                		statusLabel.setText("Click Mode : START NODE");
                     }
                     if (ke.getKeyCode() == KeyEvent.VK_B) {
                 		mode = 'b';
+                		statusLabel.setText("Click Mode : NODE BLOCK");
                     }
                     if (ke.getKeyCode() == KeyEvent.VK_I) {
                 		mode = 'i';
+                		statusLabel.setText("Click Mode : NODE INFO");
                     }
                 }
         		return true;
@@ -64,8 +77,25 @@ public class Window{
 		InitWindow();
 		
 		target = nodeArray[5][8];
+		start = nodeArray[0][0];
 
-		SetNeighbour(nodeArray[0][0], null);
+		ResetAll();
+		
+
+		startLabel = new JLabel();
+		startLabel.setText("Start Node : (" + start.getXPos() + ", " + start.getYPos() + ")");
+		panel.add(startLabel);
+		
+		targetLabel = new JLabel();
+		targetLabel.setText("Target Node : (" + target.getXPos() + ", " + target.getYPos() + ")");
+		panel.add(targetLabel);
+	}
+
+	public void UpdateTargetLabel() {
+		targetLabel.setText("Target Node : (" + target.getXPos() + ", " + target.getYPos() + ")");
+	}
+	public void UpdateStartLabel() {
+		startLabel.setText("Start Node : (" + start.getXPos() + ", " + start.getYPos() + ")");
 	}
 	
 	public void ResetAll() {
@@ -77,12 +107,14 @@ public class Window{
 				nodeArray[j][i].ResetNode();
 			}
 		}
-		
+
+		target.setBackground(Color.GREEN);
+		start.setBackground(Color.YELLOW);
 		//clear neighbourList
 		System.out.println(neighbourList.size());
 		neighbourList.clear();
 		System.out.println(neighbourList.size());
-		SetNeighbour(nodeArray[0][0], null);
+		SetNeighbour(start, null);
 		
 	}
 	
@@ -183,6 +215,9 @@ public class Window{
 		if(mode == 'b') {
 			SetBlock(node);
 		}
+		if(mode == 's') {
+			SetStart(node);
+		}
 	}
 	
 	//node info method
@@ -193,11 +228,20 @@ public class Window{
 		else
 			JOptionPane.showMessageDialog(null, "Node parent : (" + String.valueOf(node.getNodeParent().getXPos()) + ", " + String.valueOf(node.getNodeParent().getYPos()) + ")\nXPos : " + String.valueOf(node.getXPos()) + "\nYPos : " + String.valueOf(node.getYPos()));
 	}
-	
+
 	public void SetTarget(Node node) {
 		target.setBackground(Color.WHITE);
 		target = node;
 		target.setBackground(Color.GREEN);
+		ResetAll();
+		UpdateTargetLabel();
+	}
+	public void SetStart(Node node) {
+		start.setBackground(Color.WHITE);
+		start = node;
+		start.setBackground(Color.YELLOW);
+		ResetAll();
+		UpdateStartLabel();
 	}
 	
 	public void SetBlock(Node node) {
