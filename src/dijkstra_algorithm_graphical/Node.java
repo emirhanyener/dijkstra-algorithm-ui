@@ -21,6 +21,7 @@ public class Node extends JButton{
 	public void ResetNode() {
 		status = 0;
 		parentNode = null;
+		isBlock = false;
 	}
 	
 	//getters setters

@@ -20,6 +20,7 @@ public class Window{
 	private boolean isFounded;
 	private Node tempNode;
 	private char mode = 'i';
+	private JLabel statusLabel;
 	
 	//init
 	public Window() {
@@ -27,6 +28,13 @@ public class Window{
 		frame.setBounds(50, 50, 800, 590);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		JPanel panel = new JPanel();
+		panel.setBounds(550, 25, 200, 500);
+		panel.setLayout(new GridLayout(10,1));
+		frame.add(panel);
+		statusLabel = new JLabel();
+		statusLabel.setText("Click Mode : Info");
+		panel.add(statusLabel);
 		isFounded = false;
 		//for step by step pathfinding
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
