@@ -21,9 +21,11 @@ public class Window{
 	private boolean isFounded;
 	private Node tempNode;
 	private char mode = 'i';
+	private int stepCount;
 	private JLabel statusLabel;
 	private JLabel startLabel;
 	private JLabel targetLabel;
+	private JLabel stepLabel;
 	
 	//init
 	public Window() {
@@ -35,10 +37,14 @@ public class Window{
 		panel.setBounds(550, 25, 200, 500);
 		panel.setLayout(new GridLayout(10,1));
 		frame.add(panel);
-		
+
 		statusLabel = new JLabel();
 		statusLabel.setText("Click Mode : INFO");
 		panel.add(statusLabel);
+		
+		stepLabel = new JLabel();
+		stepLabel.setText("Step 0");
+		panel.add(stepLabel);
 		
 		
 		isFounded = false;
@@ -115,7 +121,8 @@ public class Window{
 		neighbourList.clear();
 		System.out.println(neighbourList.size());
 		SetNeighbour(start, null);
-		
+		stepCount = 0;
+		stepLabel.setText("Step 0");
 	}
 	
 	//create buttons and frame
@@ -180,7 +187,7 @@ public class Window{
 							continue;
 						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i] == target){
 							isFounded = true;
-							JOptionPane.showMessageDialog(null, "target founded");
+							JOptionPane.showMessageDialog(frame, "target founded");
 							tempNode = target;
 						}
 						if(!isHasNode(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i]) && nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i].getNodeStatus() != 1){
@@ -192,17 +199,20 @@ public class Window{
 			}
 			neighbourList.get(0).setBackground(Color.RED);
 			neighbourList.remove(0);
+			stepCount++;
 		}
 		
 		//if target is neighbour
 		else {
 			if(tempNode == null) {
-				JOptionPane.showMessageDialog(null, "path founded");
+				JOptionPane.showMessageDialog(frame, "path founded");
 				return;
 			}
 			tempNode.setBackground(Color.MAGENTA);
 			tempNode = tempNode.getNodeParent();
+			stepCount++;
 		}
+		stepLabel.setText("Step " + stepCount);
 	}
 	
 	public void NodeClickAction(Node node) {
