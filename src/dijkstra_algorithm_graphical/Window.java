@@ -36,15 +36,20 @@ public class Window{
 		JPanel panel = new JPanel();
 		panel.setBounds(550, 25, 200, 500);
 		panel.setLayout(new GridLayout(10,1));
-		frame.add(panel);
 
 		statusLabel = new JLabel();
 		statusLabel.setText("Click Mode : INFO");
-		panel.add(statusLabel);
 		
 		stepLabel = new JLabel();
 		stepLabel.setText("Step 0");
-		panel.add(stepLabel);
+
+		JButton helpButton = new JButton("Help");
+		helpButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ShowHelpPane();
+			}
+		});
 		
 		
 		isFounded = false;
@@ -90,11 +95,16 @@ public class Window{
 
 		startLabel = new JLabel();
 		startLabel.setText("Start Node : (" + start.getXPos() + ", " + start.getYPos() + ")");
-		panel.add(startLabel);
 		
 		targetLabel = new JLabel();
 		targetLabel.setText("Target Node : (" + target.getXPos() + ", " + target.getYPos() + ")");
+
+		frame.add(panel);
+		panel.add(statusLabel);
+		panel.add(stepLabel);
+		panel.add(startLabel);
 		panel.add(targetLabel);
+		panel.add(helpButton);
 	}
 
 	public void UpdateTargetLabel() {
@@ -256,5 +266,9 @@ public class Window{
 	
 	public void SetBlock(Node node) {
 		node.ChangeBlockState();
+	}
+	
+	public void ShowHelpPane() {
+		JOptionPane.showMessageDialog(frame, "T : Select new target node\nS : Select new start node\nB : Block / unblock node\nI : Node info\nSpace : Next step");
 	}
 }
