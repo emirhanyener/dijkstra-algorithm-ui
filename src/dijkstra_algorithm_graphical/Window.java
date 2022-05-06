@@ -7,7 +7,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.util.*;
 
 import javax.swing.*;
@@ -37,12 +37,7 @@ public class Window{
 		panel.setBounds(550, 25, 200, 500);
 		panel.setLayout(new GridLayout(10,1));
 
-		statusLabel = new JLabel();
-		statusLabel.setText("Click Mode : INFO");
-		
-		stepLabel = new JLabel();
-		stepLabel.setText("Step 0");
-
+		//help button
 		JButton helpButton = new JButton("Help");
 		helpButton.addActionListener(new ActionListener() {
 			@Override
@@ -51,9 +46,9 @@ public class Window{
 			}
 		});
 		
-		
 		isFounded = false;
-		//for step by step pathfinding
+		
+		//keyboard action
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 	        @Override
 	        public boolean dispatchKeyEvent(KeyEvent ke) {
@@ -92,13 +87,18 @@ public class Window{
 
 		ResetAll();
 		
-
 		startLabel = new JLabel();
 		startLabel.setText("Start Node : (" + start.getXPos() + ", " + start.getYPos() + ")");
 		
 		targetLabel = new JLabel();
 		targetLabel.setText("Target Node : (" + target.getXPos() + ", " + target.getYPos() + ")");
 
+		statusLabel = new JLabel();
+		statusLabel.setText("Click Mode : NODE INFO");
+		
+		stepLabel = new JLabel();
+		stepLabel.setText("Step 0");
+		
 		frame.add(panel);
 		panel.add(statusLabel);
 		panel.add(stepLabel);
@@ -211,8 +211,7 @@ public class Window{
 			neighbourList.remove(0);
 			stepCount++;
 		}
-		
-		//if target is neighbour
+		//if target is founded
 		else {
 			if(tempNode == null) {
 				JOptionPane.showMessageDialog(frame, "path founded");
@@ -225,6 +224,7 @@ public class Window{
 		stepLabel.setText("Step " + stepCount);
 	}
 	
+	//click action
 	public void NodeClickAction(Node node) {
 		if(mode == 'i') {
 			ShowNodeInfo(node);
@@ -240,15 +240,12 @@ public class Window{
 		}
 	}
 	
-	//node info method
+	//node info
 	public void ShowNodeInfo(Node node) {
-		//JOptionPane.showMessageDialog(null, "Node parent : (" + String.valueOf(nodeArray[0][0].getXPos()));
-		if(node.getNodeParent() == null)
-			JOptionPane.showMessageDialog(null, "Node parent : (null)\nXPos : " + String.valueOf(node.getXPos()) + "\nYPos : " + String.valueOf(node.getYPos()));
-		else
-			JOptionPane.showMessageDialog(null, "Node parent : (" + String.valueOf(node.getNodeParent().getXPos()) + ", " + String.valueOf(node.getNodeParent().getYPos()) + ")\nXPos : " + String.valueOf(node.getXPos()) + "\nYPos : " + String.valueOf(node.getYPos()));
+		JOptionPane.showMessageDialog(null, "Node parent : " + (node.getNodeParent() == null ? "(null)" : "(" + String.valueOf(node.getNodeParent().getXPos()) + ", " + String.valueOf(node.getNodeParent().getYPos()) + ")") + "\nXPos : " + String.valueOf(node.getXPos()) + "\nYPos : " + String.valueOf(node.getYPos()));
 	}
-
+	
+	//set target node
 	public void SetTarget(Node node) {
 		target.setBackground(Color.WHITE);
 		target = node;
@@ -256,6 +253,8 @@ public class Window{
 		ResetAll();
 		UpdateTargetLabel();
 	}
+	
+	//set start node
 	public void SetStart(Node node) {
 		start.setBackground(Color.WHITE);
 		start = node;
@@ -264,10 +263,12 @@ public class Window{
 		UpdateStartLabel();
 	}
 	
+	//block or unblock node
 	public void SetBlock(Node node) {
 		node.ChangeBlockState();
 	}
 	
+	//help panel
 	public void ShowHelpPane() {
 		JOptionPane.showMessageDialog(frame, "T : Select new target node\nS : Select new start node\nB : Block / unblock node\nI : Node info\nSpace : Next step");
 	}
