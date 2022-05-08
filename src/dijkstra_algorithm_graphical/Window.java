@@ -48,6 +48,12 @@ public class Window{
 		
 		isFounded = false;
 		
+		statusLabel = new JLabel();
+		statusLabel.setText("Click Mode : NODE INFO");
+		stepLabel = new JLabel();
+		stepLabel.setText("Step 0");
+
+		
 		//keyboard action
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 	        @Override
@@ -93,18 +99,13 @@ public class Window{
 		targetLabel = new JLabel();
 		targetLabel.setText("Target Node : (" + target.getXPos() + ", " + target.getYPos() + ")");
 
-		statusLabel = new JLabel();
-		statusLabel.setText("Click Mode : NODE INFO");
-		
-		stepLabel = new JLabel();
-		stepLabel.setText("Step 0");
-		
-		frame.add(panel);
+
 		panel.add(statusLabel);
 		panel.add(stepLabel);
 		panel.add(startLabel);
 		panel.add(targetLabel);
 		panel.add(helpButton);
+		frame.add(panel);
 	}
 
 	public void UpdateTargetLabel() {
@@ -270,6 +271,11 @@ public class Window{
 	
 	//help panel
 	public void ShowHelpPane() {
-		JOptionPane.showMessageDialog(frame, "T : Select new target node\nS : Select new start node\nB : Block / unblock node\nI : Node info\nSpace : Next step");
+		JOptionPane.showMessageDialog(frame, "T : Select new target node"
+				+ "\nS : Select new start node"
+				+ "\nB : Block / unblock node"
+				+ "\nI : Node info"
+				+ "\nR : Reset all"
+				+ "\nSpace : Next step");
 	}
 }
