@@ -53,7 +53,6 @@ public class Window{
 		stepLabel = new JLabel();
 		stepLabel.setText("Step 0");
 
-		
 		//keyboard action
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 	        @Override
@@ -210,6 +209,8 @@ public class Window{
 			}
 			neighbourList.get(0).setBackground(Color.RED);
 			neighbourList.remove(0);
+			
+			new NeighboursForm(stepCount, GetNeighbours());
 			stepCount++;
 		}
 		//if target is founded
@@ -223,6 +224,18 @@ public class Window{
 			stepCount++;
 		}
 		stepLabel.setText("Step " + stepCount);
+	}
+	
+	private String[][] GetNeighbours() {
+		String neighbours[][] = new String[neighbourList.size()][3];
+		int itemCounter = 0;
+		for(Node item : neighbourList) {
+			neighbours[itemCounter][0] = String.valueOf(item.getXPos());
+			neighbours[itemCounter][1] = String.valueOf(item.getYPos());
+			neighbours[itemCounter][2] = "(" + String.valueOf(item.getNodeParent().getXPos()) + ", " + String.valueOf(item.getNodeParent().getYPos()) + ")";
+			itemCounter++;
+		}
+		return neighbours;
 	}
 	
 	//click action
