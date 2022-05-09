@@ -45,6 +45,13 @@ public class Window{
 				ShowHelpPane();
 			}
 		});
+		JButton neighboursButton = new JButton("Neighbours");
+		neighboursButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ShowNeighbours();
+			}
+		});
 		
 		isFounded = false;
 		
@@ -104,6 +111,7 @@ public class Window{
 		panel.add(startLabel);
 		panel.add(targetLabel);
 		panel.add(helpButton);
+		panel.add(neighboursButton);
 		frame.add(panel);
 	}
 
@@ -210,7 +218,6 @@ public class Window{
 			neighbourList.get(0).setBackground(Color.RED);
 			neighbourList.remove(0);
 			
-			new NeighboursForm(stepCount, GetNeighbours());
 			stepCount++;
 		}
 		//if target is founded
@@ -226,7 +233,7 @@ public class Window{
 		stepLabel.setText("Step " + stepCount);
 	}
 	
-	private String[][] GetNeighbours() {
+	private void ShowNeighbours() {
 		String neighbours[][] = new String[neighbourList.size()][3];
 		int itemCounter = 0;
 		for(Node item : neighbourList) {
@@ -235,7 +242,7 @@ public class Window{
 			neighbours[itemCounter][2] = "(" + String.valueOf(item.getNodeParent().getXPos()) + ", " + String.valueOf(item.getNodeParent().getYPos()) + ")";
 			itemCounter++;
 		}
-		return neighbours;
+		new NeighboursForm(stepCount, neighbours);
 	}
 	
 	//click action
