@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 public class NodeAction {
 	
-	private char mode = 'i';
+	private INodeAction nodeAction = nodeAction = new NodeActionInfo();
 	public NodeAction() {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 			
@@ -20,16 +20,16 @@ public class NodeAction {
                     	SingleObject.InstantiateObj().currentWindow.ResetAll();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_T) {
-                		mode = 't';
+                    	nodeAction = new NodeActionTarget();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_S) {
-                		mode = 's';
+                    	nodeAction = new NodeActionStart();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_B) {
-                		mode = 'b';
+                    	nodeAction = new NodeActionBlock();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_I) {
-                		mode = 'i';
+                		nodeAction = new NodeActionInfo();
                     }
 				}
 				return true;
@@ -38,6 +38,6 @@ public class NodeAction {
 	}
 	
 	public void NodeClick(Node node) {
-		
+		nodeAction.NodeEvent(node);
 	}
 }

@@ -12,7 +12,7 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class Window implements INodeClickAction{
+public class Window{
 	private JFrame frame;
 	private JLabel statusLabel;
 	private JLabel startLabel;
@@ -90,7 +90,6 @@ public class Window implements INodeClickAction{
 	public void setStatusLabel(String status) {
 		statusLabel.setText("Click Mode : " + status);
 	}
-
 	public void SetTargetLabel(String pos) {
 		targetLabel.setText("Target Node : (" + target.getXPos() + ", " + target.getYPos() + ")");
 	}
@@ -214,28 +213,6 @@ public class Window implements INodeClickAction{
 		new NeighboursForm(stepCount, neighbours);
 	}
 	
-	//click action
-	/*
-	public void NodeClickAction(Node node) {
-		if(mode == 'i') {
-			ShowNodeInfo(node);
-		}
-		if(mode == 't') {
-			SetTarget(node);
-		}
-		if(mode == 'b') {
-			ChangeNodeBlock(node);
-		}
-		if(mode == 's') {
-			SetStart(node);
-		}
-	}*/
-	
-	//node info
-	public void ShowNodeInfo(Node node) {
-		JOptionPane.showMessageDialog(null, "Node parent : " + (node.getNodeParent() == null ? "(null)" : "(" + String.valueOf(node.getNodeParent().getXPos()) + ", " + String.valueOf(node.getNodeParent().getYPos()) + ")") + "\nXPos : " + String.valueOf(node.getXPos()) + "\nYPos : " + String.valueOf(node.getYPos()));
-	}
-	
 	//set target node
 	public void SetTarget(Node node) {
 		target.setBackground(Color.WHITE);
@@ -252,11 +229,6 @@ public class Window implements INodeClickAction{
 		start.setBackground(Color.YELLOW);
 		ResetAll();
 		//UpdateStartLabel();
-	}
-	
-	//block or unblock node
-	public void ChangeNodeBlock(Node node) {
-		node.ChangeBlockState();
 	}
 	
 	//help panel
