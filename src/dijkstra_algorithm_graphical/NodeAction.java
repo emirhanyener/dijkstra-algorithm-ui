@@ -14,10 +14,10 @@ public class NodeAction {
 			public boolean dispatchKeyEvent(KeyEvent e) {
 				if(e.getID() == KeyEvent.KEY_PRESSED) {
                     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                		//window.StepByStep();
+                		SingleObject.InstantiateObj().currentWindow.StepByStep();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_R) {
-                    	//window.ResetAll();
+                    	SingleObject.InstantiateObj().currentWindow.ResetAll();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_T) {
                 		mode = 't';

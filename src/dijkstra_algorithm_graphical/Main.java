@@ -18,5 +18,6 @@ public class Main {
 	
 	public void CreateWindow() {
 		window = new Window(10, 10);
+		SingleObject.InstantiateObj().currentWindow = window;
 	}
 }
