@@ -61,6 +61,7 @@ public class Window{
 		stepLabel.setText("Step 0");
 
 		//keyboard action
+		/*
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 	        @Override
 	        public boolean dispatchKeyEvent(KeyEvent ke) {
@@ -91,7 +92,7 @@ public class Window{
         		return true;
 	        }
 	    });
-		
+		*/
 		InitWindow();
 		
 		target = nodeArray[5][8];
@@ -135,9 +136,7 @@ public class Window{
 		target.setBackground(Color.GREEN);
 		start.setBackground(Color.YELLOW);
 		//clear neighbourList
-		System.out.println(neighbourList.size());
 		neighbourList.clear();
-		System.out.println(neighbourList.size());
 		SetNeighbour(start, null);
 		stepCount = 0;
 		stepLabel.setText("Step 0");
@@ -234,11 +233,17 @@ public class Window{
 	}
 	
 	private void ShowNeighbours() {
+		if(neighbourList.isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "neighbours is empty");
+		}
 		String neighbours[][] = new String[neighbourList.size()][3];
 		int itemCounter = 0;
 		for(Node item : neighbourList) {
 			neighbours[itemCounter][0] = String.valueOf(item.getXPos());
 			neighbours[itemCounter][1] = String.valueOf(item.getYPos());
+			if(item.getNodeParent() == null)
+				neighbours[itemCounter][2] = "null";
+			else
 			neighbours[itemCounter][2] = "(" + String.valueOf(item.getNodeParent().getXPos()) + ", " + String.valueOf(item.getNodeParent().getYPos()) + ")";
 			itemCounter++;
 		}

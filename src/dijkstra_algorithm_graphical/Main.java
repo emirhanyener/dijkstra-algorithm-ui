@@ -3,5 +3,6 @@ package dijkstra_algorithm_graphical;
 public class Main {
 	public static void main(String[] args) {
 		Window window = new Window();
+		ClickMode mode = new ClickMode(window);
 	}
 }
