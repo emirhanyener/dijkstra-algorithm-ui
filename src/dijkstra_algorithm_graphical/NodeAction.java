@@ -4,19 +4,20 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
-public class ClickMode {
-	char mode = 'i';
-	public ClickMode(INodeClickAction window) {
+public class NodeAction {
+	
+	private char mode = 'i';
+	public NodeAction() {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 			
 			@Override
 			public boolean dispatchKeyEvent(KeyEvent e) {
 				if(e.getID() == KeyEvent.KEY_PRESSED) {
                     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                		window.StepByStep();
+                		//window.StepByStep();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_R) {
-                    	window.ResetAll();
+                    	//window.ResetAll();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_T) {
                 		mode = 't';
@@ -36,5 +37,7 @@ public class ClickMode {
 		});
 	}
 	
-	
+	public void NodeClick(Node node) {
+		
+	}
 }

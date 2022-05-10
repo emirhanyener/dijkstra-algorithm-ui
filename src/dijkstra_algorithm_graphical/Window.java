@@ -12,27 +12,32 @@ import java.util.*;
 
 import javax.swing.*;
 
-public class Window{
-	private Node[][] nodeArray = new Node[10][10];
-	private List<Node> neighbourList = new ArrayList<Node>();
-	private Node target;
-	private Node start;
+public class Window implements INodeClickAction{
 	private JFrame frame;
-	private boolean isFounded;
-	private Node tempNode;
-	private char mode = 'i';
-	private int stepCount;
 	private JLabel statusLabel;
 	private JLabel startLabel;
 	private JLabel targetLabel;
 	private JLabel stepLabel;
 	
+	public List<Node> neighbourList = new ArrayList<Node>();
+	public Node target = null;
+	public Node start = null;
+	public boolean isFounded = false;
+	public Node tempNode = null;
+	public int stepCount = 0;
+	public Node[][] nodeArray;
+	
 	//init
-	public Window() {
+	public Window(int xSize, int ySize) {
 		frame = new JFrame("Dijkstra's Shortest Path Algorithm");
-		frame.setBounds(50, 50, 800, 590);
+		frame.setBounds(50, 50, 800, 600);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		nodeArray = NodeMapCreator.CreateNodeMap(xSize, ySize);
+		target = nodeArray[5][6];
+		start = nodeArray[1][1];
+		
 		JPanel panel = new JPanel();
 		panel.setBounds(550, 25, 200, 500);
 		panel.setLayout(new GridLayout(10,1));
@@ -45,6 +50,7 @@ public class Window{
 				ShowHelpPane();
 			}
 		});
+		//neighbours button
 		JButton neighboursButton = new JButton("Neighbours");
 		neighboursButton.addActionListener(new ActionListener() {
 			@Override
@@ -53,50 +59,14 @@ public class Window{
 			}
 		});
 		
-		isFounded = false;
-		
 		statusLabel = new JLabel();
-		statusLabel.setText("Click Mode : NODE INFO");
+		setStatusLabel("NODE INFO");
+		
 		stepLabel = new JLabel();
 		stepLabel.setText("Step 0");
 
-		//keyboard action
-		/*
-		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-	        @Override
-	        public boolean dispatchKeyEvent(KeyEvent ke) {
-                if( ke.getID() == KeyEvent.KEY_PRESSED) {
-                    if (ke.getKeyCode() == KeyEvent.VK_SPACE) {
-                		StepByStep();
-                    }
-                    if (ke.getKeyCode() == KeyEvent.VK_R) {
-                		ResetAll();
-                    }
-                    if (ke.getKeyCode() == KeyEvent.VK_T) {
-                		mode = 't';
-                		statusLabel.setText("Click Mode : TARGET NODE");
-                    }
-                    if (ke.getKeyCode() == KeyEvent.VK_S) {
-                		mode = 's';
-                		statusLabel.setText("Click Mode : START NODE");
-                    }
-                    if (ke.getKeyCode() == KeyEvent.VK_B) {
-                		mode = 'b';
-                		statusLabel.setText("Click Mode : NODE BLOCK");
-                    }
-                    if (ke.getKeyCode() == KeyEvent.VK_I) {
-                		mode = 'i';
-                		statusLabel.setText("Click Mode : NODE INFO");
-                    }
-                }
-        		return true;
-	        }
-	    });
-		*/
 		InitWindow();
 		
-		target = nodeArray[5][8];
-		start = nodeArray[0][0];
 
 		ResetAll();
 		
@@ -115,11 +85,16 @@ public class Window{
 		panel.add(neighboursButton);
 		frame.add(panel);
 	}
+	
+	
+	public void setStatusLabel(String status) {
+		statusLabel.setText("Click Mode : " + status);
+	}
 
-	public void UpdateTargetLabel() {
+	public void SetTargetLabel(String pos) {
 		targetLabel.setText("Target Node : (" + target.getXPos() + ", " + target.getYPos() + ")");
 	}
-	public void UpdateStartLabel() {
+	public void SetStartLabel(String pos) {
 		startLabel.setText("Start Node : (" + start.getXPos() + ", " + start.getYPos() + ")");
 	}
 	
@@ -150,18 +125,7 @@ public class Window{
 		
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				Node node = new Node();
-				node.setXPos(j);
-				node.setYPos(i);
-				nodeArray[j][i] = node;
-				nodeArray[j][i].setBackground(Color.WHITE);
-				node.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						NodeClickAction(node);
-					}
-				});
-				panel.add(node);
+				panel.add(nodeArray[j][i]);
 			}
 		}
 		frame.add(panel);
@@ -251,6 +215,7 @@ public class Window{
 	}
 	
 	//click action
+	/*
 	public void NodeClickAction(Node node) {
 		if(mode == 'i') {
 			ShowNodeInfo(node);
@@ -259,12 +224,12 @@ public class Window{
 			SetTarget(node);
 		}
 		if(mode == 'b') {
-			SetBlock(node);
+			ChangeNodeBlock(node);
 		}
 		if(mode == 's') {
 			SetStart(node);
 		}
-	}
+	}*/
 	
 	//node info
 	public void ShowNodeInfo(Node node) {
@@ -277,7 +242,7 @@ public class Window{
 		target = node;
 		target.setBackground(Color.GREEN);
 		ResetAll();
-		UpdateTargetLabel();
+		//UpdateTargetLabel();
 	}
 	
 	//set start node
@@ -286,11 +251,11 @@ public class Window{
 		start = node;
 		start.setBackground(Color.YELLOW);
 		ResetAll();
-		UpdateStartLabel();
+		//UpdateStartLabel();
 	}
 	
 	//block or unblock node
-	public void SetBlock(Node node) {
+	public void ChangeNodeBlock(Node node) {
 		node.ChangeBlockState();
 	}
 	
