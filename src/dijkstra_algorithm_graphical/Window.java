@@ -176,7 +176,7 @@ public class Window{
 
 		for (int i = 0; i < 10; i++) {
 			for (int j = 0; j < 10; j++) {
-				 nodeArray[j][i].setDistanceFromSource(CalculateDistance(nodeArray[j][i].getXPos(), target.getXPos(), nodeArray[j][i].getYPos(), target.getYPos()));
+				 nodeArray[j][i].setDistanceFromSource(CalculateDistance(nodeArray[j][i].getXPos(), start.getXPos(), nodeArray[j][i].getYPos(), start.getYPos()));
 			}
 		}
 		
