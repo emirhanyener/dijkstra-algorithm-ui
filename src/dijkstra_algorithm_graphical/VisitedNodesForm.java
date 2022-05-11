@@ -4,12 +4,12 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-public class NeighboursForm extends JFrame {
-	public NeighboursForm(int step, String[][] datas) {
+public class VisitedNodesForm extends JFrame {
+	public VisitedNodesForm(int step, String[][] datas) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setTitle("Step " + step);
+		setTitle("Visited Nodes (Step : " + step + ")");
 		setBounds(10, 10, 400, 300);
-		String column[] = {"X Position", "Y Position", "Parent Node"};
+		String column[] = {"X Position", "Y Position", "Came From"};
 		JTable table = new JTable(datas, column);
 		add(table);
 		add(new JScrollPane(table));

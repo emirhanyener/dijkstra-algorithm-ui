@@ -18,8 +18,10 @@ public class Window{
 	private JLabel startLabel;
 	private JLabel targetLabel;
 	private JLabel stepLabel;
-	
+
 	public List<Node> neighbourList = new ArrayList<Node>();
+	public List<Node> visitedList = new ArrayList<Node>();
+	
 	public Node target = null;
 	public Node start = null;
 	public boolean isFounded = false;
@@ -51,11 +53,18 @@ public class Window{
 			}
 		});
 		//neighbours button
-		JButton neighboursButton = new JButton("Neighbours");
-		neighboursButton.addActionListener(new ActionListener() {
+		JButton neighbourNodesButton = new JButton("Neighbour Nodes");
+		neighbourNodesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ShowNeighbours();
+				ShowNeighbourNodes();
+			}
+		});
+		JButton visitedNodesButton = new JButton("Visited Nodes");
+		visitedNodesButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ShowVisitedNodes();
 			}
 		});
 		
@@ -82,7 +91,8 @@ public class Window{
 		panel.add(startLabel);
 		panel.add(targetLabel);
 		panel.add(helpButton);
-		panel.add(neighboursButton);
+		panel.add(neighbourNodesButton);
+		panel.add(visitedNodesButton);
 		frame.add(panel);
 	}
 	
@@ -162,7 +172,7 @@ public class Window{
 			for (int i = -1; i < 2 && !isFounded; i++) {
 				for (int j = -1; j < 2 && !isFounded; j++) {
 					if(neighbourList.get(0).getXPos() + j >= 0 && neighbourList.get(0).getXPos() + j < 10 && neighbourList.get(0).getYPos() + i >= 0 && neighbourList.get(0).getYPos() + i < 10) {
-						System.out.println("neighbour ( " + (neighbourList.get(0).getXPos() + j) +  ", "+ (neighbourList.get(0).getYPos() + i)+" ) : " + String.valueOf(isHasNode(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i])));
+						//System.out.println("neighbour ( " + (neighbourList.get(0).getXPos() + j) +  ", "+ (neighbourList.get(0).getYPos() + i)+" ) : " + String.valueOf(isHasNode(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i])));
 						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i].getBlockState())
 							continue;
 						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i] == target){
@@ -194,10 +204,10 @@ public class Window{
 		}
 		stepLabel.setText("Step " + stepCount);
 	}
-	
-	private void ShowNeighbours() {
+
+	private void ShowNeighbourNodes() {
 		if(neighbourList.isEmpty()) {
-			JOptionPane.showMessageDialog(frame, "neighbours is empty");
+			JOptionPane.showMessageDialog(frame, "neighbour nodes is empty");
 		}
 		String neighbours[][] = new String[neighbourList.size()][3];
 		int itemCounter = 0;
@@ -210,7 +220,24 @@ public class Window{
 			neighbours[itemCounter][2] = "(" + String.valueOf(item.getNodeParent().getXPos()) + ", " + String.valueOf(item.getNodeParent().getYPos()) + ")";
 			itemCounter++;
 		}
-		new NeighboursForm(stepCount, neighbours);
+		new NeighbourNodesForm(stepCount, neighbours);
+	}
+	private void ShowVisitedNodes() {
+		if(visitedList.isEmpty()) {
+			JOptionPane.showMessageDialog(frame, "visited nodes is empty");
+		}
+		String visitedNodes[][] = new String[visitedList.size()][3];
+		int itemCounter = 0;
+		for(Node item : neighbourList) {
+			visitedNodes[itemCounter][0] = String.valueOf(item.getXPos());
+			visitedNodes[itemCounter][1] = String.valueOf(item.getYPos());
+			if(item.getNodeParent() == null)
+				visitedNodes[itemCounter][2] = "null";
+			else
+				visitedNodes[itemCounter][2] = "(" + String.valueOf(item.getNodeParent().getXPos()) + ", " + String.valueOf(item.getNodeParent().getYPos()) + ")";
+			itemCounter++;
+		}
+		new NeighbourNodesForm(stepCount, visitedNodes);
 	}
 	
 	//set target node
