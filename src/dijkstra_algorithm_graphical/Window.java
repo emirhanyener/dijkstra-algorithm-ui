@@ -149,8 +149,15 @@ public class Window{
 	}
 	
 	//if neighbourList has node
-	public boolean isHasNode(Node node) {
+	public boolean isNeighbour(Node node) {
 		for(Node item : neighbourList) {
+			if(item == node)
+				return true;
+		}
+		return false;
+	}
+	public boolean isVisited(Node node) {
+		for(Node item : visitedList) {
 			if(item == node)
 				return true;
 		}
@@ -171,6 +178,10 @@ public class Window{
 			//neighbour find
 			for (int i = -1; i < 2 && !isFounded; i++) {
 				for (int j = -1; j < 2 && !isFounded; j++) {
+					/*
+					if((i == -1 && j == -1) || (i == -1 && j == 1) || (i == 1 && j == 1) || (i == 1 && j == -1)){
+						continue;
+					}*/
 					if(neighbourList.get(0).getXPos() + j >= 0 && neighbourList.get(0).getXPos() + j < 10 && neighbourList.get(0).getYPos() + i >= 0 && neighbourList.get(0).getYPos() + i < 10) {
 						//System.out.println("neighbour ( " + (neighbourList.get(0).getXPos() + j) +  ", "+ (neighbourList.get(0).getYPos() + i)+" ) : " + String.valueOf(isHasNode(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i])));
 						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i].getBlockState())
@@ -180,7 +191,7 @@ public class Window{
 							JOptionPane.showMessageDialog(frame, "target founded");
 							tempNode = target;
 						}
-						if(!isHasNode(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i]) && nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i].getNodeStatus() != 1){
+						if(!isNeighbour(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i]) && !isVisited(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i])){
 							SetNeighbour(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i], nodeArray[neighbourList.get(0).getXPos()][neighbourList.get(0).getYPos()]);
 							System.out.println("neighbour ( " + (neighbourList.get(0).getXPos() + j) +  ", "+ (neighbourList.get(0).getYPos() + i)+" ) added ");
 						}
@@ -188,6 +199,7 @@ public class Window{
 				}
 			}
 			neighbourList.get(0).setBackground(Color.RED);
+			visitedList.add(neighbourList.get(0));
 			neighbourList.remove(0);
 			
 			stepCount++;
@@ -208,6 +220,7 @@ public class Window{
 	private void ShowNeighbourNodes() {
 		if(neighbourList.isEmpty()) {
 			JOptionPane.showMessageDialog(frame, "neighbour nodes is empty");
+			return;
 		}
 		String neighbours[][] = new String[neighbourList.size()][3];
 		int itemCounter = 0;
@@ -225,10 +238,11 @@ public class Window{
 	private void ShowVisitedNodes() {
 		if(visitedList.isEmpty()) {
 			JOptionPane.showMessageDialog(frame, "visited nodes is empty");
+			return;
 		}
 		String visitedNodes[][] = new String[visitedList.size()][3];
 		int itemCounter = 0;
-		for(Node item : neighbourList) {
+		for(Node item : visitedList) {
 			visitedNodes[itemCounter][0] = String.valueOf(item.getXPos());
 			visitedNodes[itemCounter][1] = String.valueOf(item.getYPos());
 			if(item.getNodeParent() == null)
