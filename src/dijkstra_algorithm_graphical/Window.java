@@ -121,6 +121,7 @@ public class Window{
 		start.setBackground(Color.YELLOW);
 		//clear neighbourList
 		neighbourList.clear();
+		visitedList.clear();
 		SetNeighbour(start, null);
 		stepCount = 0;
 		stepLabel.setText("Step 0");
@@ -171,36 +172,92 @@ public class Window{
 		}
 	}
 	
+	public void UpdateDistance() {
+
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				 nodeArray[j][i].setDistanceFromSource(CalculateDistance(nodeArray[j][i].getXPos(), target.getXPos(), nodeArray[j][i].getYPos(), target.getYPos()));
+			}
+		}
+		
+	}
+	
+	public float CalculateDistance(int x1, int x2, int y1, int y2) {
+		float distance = 0;
+		float xDistance = abs(x2 - x1);
+		float yDistance = abs(y2 - y1);
+		if(xDistance >= 1 && yDistance >= 1) {
+			if(xDistance < yDistance) {
+				distance += xDistance * 1.4f;
+				distance += yDistance - xDistance;
+			}
+			else {
+				distance += yDistance * 1.4f;
+				distance += xDistance - yDistance;
+			}
+		}
+		else {
+			distance += xDistance;
+			distance += yDistance;
+		}
+		return distance;
+	}
+	
+	public Node GetLowerNode() {
+		Node node = neighbourList.get(0);
+		for(Node item : neighbourList) {
+			if(item.getDistanceFromSource() < node.getDistanceFromSource())
+				node = item;
+		}
+		return node;
+	}
+	
+
+	public float abs(float value){
+		if(value < 0)
+			return (value * -1);
+		return value;
+	}
+	public int abs(int value){
+		if(value < 0)
+			return (value * -1);
+		return value;
+	}
+	public double abs(double value){
+		if(value < 0)
+			return (value * -1);
+		return value;
+	}
+	
 	//method for step by step pathfinding (default space press)
 	public void NextStep() {
 		PrintNeighbourList();
+		UpdateDistance();
+		Node node = GetLowerNode();
+		System.out.println(GetLowerNode().getXPos() + "," + GetLowerNode().getYPos());
 		if(!isFounded) {
 			//neighbour find
 			for (int i = -1; i < 2 && !isFounded; i++) {
 				for (int j = -1; j < 2 && !isFounded; j++) {
-					/*
-					if((i == -1 && j == -1) || (i == -1 && j == 1) || (i == 1 && j == 1) || (i == 1 && j == -1)){
-						continue;
-					}*/
-					if(neighbourList.get(0).getXPos() + j >= 0 && neighbourList.get(0).getXPos() + j < 10 && neighbourList.get(0).getYPos() + i >= 0 && neighbourList.get(0).getYPos() + i < 10) {
+					if(node.getXPos() + j >= 0 && node.getXPos() + j < 10 && node.getYPos() + i >= 0 && node.getYPos() + i < 10) {
 						//System.out.println("neighbour ( " + (neighbourList.get(0).getXPos() + j) +  ", "+ (neighbourList.get(0).getYPos() + i)+" ) : " + String.valueOf(isHasNode(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i])));
-						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i].getBlockState())
+						if(nodeArray[node.getXPos() + j][node.getYPos() + i].getBlockState())
 							continue;
-						if(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i] == target){
+						if(nodeArray[node.getXPos() + j][node.getYPos() + i] == target){
 							isFounded = true;
 							JOptionPane.showMessageDialog(frame, "target founded");
 							tempNode = target;
 						}
-						if(!isNeighbour(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i]) && !isVisited(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i])){
-							SetNeighbour(nodeArray[neighbourList.get(0).getXPos() + j][neighbourList.get(0).getYPos() + i], nodeArray[neighbourList.get(0).getXPos()][neighbourList.get(0).getYPos()]);
-							System.out.println("neighbour ( " + (neighbourList.get(0).getXPos() + j) +  ", "+ (neighbourList.get(0).getYPos() + i)+" ) added ");
+						if(!isNeighbour(nodeArray[node.getXPos() + j][node.getYPos() + i]) && !isVisited(nodeArray[node.getXPos() + j][node.getYPos() + i])){
+							SetNeighbour(nodeArray[node.getXPos() + j][node.getYPos() + i], nodeArray[node.getXPos()][node.getYPos()]);
+							System.out.println("neighbour ( " + (node.getXPos() + j) +  ", "+ (node.getYPos() + i)+" ) added ");
 						}
 					}
 				}
 			}
-			neighbourList.get(0).setBackground(Color.RED);
-			visitedList.add(neighbourList.get(0));
-			neighbourList.remove(0);
+			node.setBackground(Color.RED);
+			visitedList.add(node);
+			neighbourList.remove(node);
 			
 			stepCount++;
 		}

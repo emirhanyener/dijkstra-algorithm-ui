@@ -10,9 +10,11 @@ public class NodeActionInfo implements INodeAction{
 				+ ", " 
 				+ String.valueOf(node.getNodeParent().getYPos()) 
 				+ ")") 
-				+ "\nXPos : " 
+				+ "\nX Posisiton : " 
 				+ String.valueOf(node.getXPos()) 
-				+ "\nYPos : " 
-				+ String.valueOf(node.getYPos()));
+				+ "\nY Position : " 
+				+ String.valueOf(node.getYPos())
+				+ "\nDistance From Target : " 
+				+ String.valueOf(node.getDistanceFromSource()));
 	}
 }

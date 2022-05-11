@@ -9,16 +9,19 @@ public class Node extends JButton{
 	private int xPos;
 	private int yPos;
 	private boolean isBlock;
+	private float distanceFromSource;
 	
 	Node(){
 		super();
 		isBlock = false;
 		parentNode = null;
+		distanceFromSource = 0;
 	}
 	
 	public void ResetNode() {
 		parentNode = null;
 		isBlock = false;
+		distanceFromSource = 0;
 	}
 	
 	//getters setters
@@ -56,5 +59,11 @@ public class Node extends JButton{
 	}
 	public boolean getBlockState() {
 		return isBlock;
+	}
+	public void setDistanceFromSource(float value) {
+		distanceFromSource = value;
+	}
+	public float getDistanceFromSource() {
+		return distanceFromSource;
 	}
 }
