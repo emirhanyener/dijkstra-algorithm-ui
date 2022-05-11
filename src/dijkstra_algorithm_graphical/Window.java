@@ -28,13 +28,13 @@ public class Window{
 	public Node[][] nodeArray;
 	
 	//init
-	public Window(int xSize, int ySize) {
+	public Window(int xSize, int ySize, NodeAction nodeAction) {
 		frame = new JFrame("Dijkstra's Shortest Path Algorithm");
 		frame.setBounds(50, 50, 800, 600);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		nodeArray = NodeMapCreator.CreateNodeMap(xSize, ySize);
+		nodeArray = NodeMapCreator.CreateNodeMap(xSize, ySize, nodeAction);
 		target = nodeArray[5][6];
 		start = nodeArray[1][1];
 		

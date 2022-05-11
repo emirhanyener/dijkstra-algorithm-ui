@@ -37,12 +37,12 @@ public class NodeMapCreator {
 		}
 		return panel;
 	}
-	public static Node[][] CreateNodeMap(int xSize, int ySize){
+	public static Node[][] CreateNodeMap(int xSize, int ySize, NodeAction nodeAction){
 		Node[][] nodeArray = new Node[ySize][xSize];
-		NodeAction nodeAction = new NodeAction();
+		//NodeAction nodeAction = new NodeAction();
 		
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < ySize; i++) {
+			for (int j = 0; j < xSize; j++) {
 				Node node = new Node();
 				node.setXPos(j);
 				node.setYPos(i);

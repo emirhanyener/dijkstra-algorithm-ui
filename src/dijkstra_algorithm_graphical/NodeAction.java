@@ -5,8 +5,9 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.KeyEvent;
 
 public class NodeAction {
+	private NodeActionList nodeActionList = new NodeActionList();
+	private INodeAction nodeAction = new NodeActionInfo();
 	
-	private INodeAction nodeAction = nodeAction = new NodeActionInfo();
 	public NodeAction() {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 			
@@ -19,17 +20,18 @@ public class NodeAction {
                     if (e.getKeyCode() == KeyEvent.VK_R) {
                     	SingleObject.InstantiateObj().currentWindow.ResetAll();
                     }
-                    if (e.getKeyCode() == KeyEvent.VK_T) {
-                    	nodeAction = new NodeActionTarget();
-                    }
-                    if (e.getKeyCode() == KeyEvent.VK_S) {
-                    	nodeAction = new NodeActionStart();
-                    }
-                    if (e.getKeyCode() == KeyEvent.VK_B) {
-                    	nodeAction = new NodeActionBlock();
-                    }
-                    if (e.getKeyCode() == KeyEvent.VK_I) {
-                		nodeAction = new NodeActionInfo();
+                    NodeActionListIterator actions = new NodeActionListIterator(nodeActionList);
+                    
+                    while(true) {
+                    	if(actions.Current() == null) {
+                    		break;
+                    	}
+                    	if(e.getKeyCode() == actions.Current().key) {
+                    		nodeAction = actions.Current().nodeAction;
+                        	SingleObject.InstantiateObj().currentWindow.setStatusLabel(actions.Current().info);
+                    	}
+                    	System.out.println(actions.Current().info);
+                    	actions.Next();
                     }
 				}
 				return true;
@@ -39,5 +41,9 @@ public class NodeAction {
 	
 	public void NodeClick(Node node) {
 		nodeAction.NodeEvent(node);
+	}
+	
+	public void AddNodeAction(int _key, INodeAction _nodeAction, String _info) {
+		nodeActionList.Add(_key, _nodeAction, _info);
 	}
 }
