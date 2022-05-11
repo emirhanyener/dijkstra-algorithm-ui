@@ -14,7 +14,7 @@ public class NodeAction {
 			public boolean dispatchKeyEvent(KeyEvent e) {
 				if(e.getID() == KeyEvent.KEY_PRESSED) {
                     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                		SingleObject.InstantiateObj().currentWindow.StepByStep();
+                		SingleObject.InstantiateObj().currentWindow.NextStep();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_R) {
                     	SingleObject.InstantiateObj().currentWindow.ResetAll();

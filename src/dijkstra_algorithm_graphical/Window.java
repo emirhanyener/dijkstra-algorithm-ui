@@ -155,7 +155,7 @@ public class Window{
 	}
 	
 	//method for step by step pathfinding (default space press)
-	public void StepByStep() {
+	public void NextStep() {
 		PrintNeighbourList();
 		if(!isFounded) {
 			//neighbour find
