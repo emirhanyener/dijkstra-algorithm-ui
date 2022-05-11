@@ -6,7 +6,6 @@ import javax.swing.JButton;
 
 public class Node extends JButton{
 	private Node parentNode;
-	private int status;
 	private int xPos;
 	private int yPos;
 	private boolean isBlock;
@@ -15,11 +14,9 @@ public class Node extends JButton{
 		super();
 		isBlock = false;
 		parentNode = null;
-		status = 0;
 	}
 	
 	public void ResetNode() {
-		status = 0;
 		parentNode = null;
 		isBlock = false;
 	}
@@ -30,7 +27,6 @@ public class Node extends JButton{
 		this.yPos = y;
 	}
 	public void setNodeVisited(Node parent) {
-		this.status = 1;
 		parentNode = parent;
 	}
 	public Node getNodeParent() {
@@ -38,10 +34,6 @@ public class Node extends JButton{
 	}
 	public void setNodeParent(Node parent) {
 		parentNode = parent;
-		this.status = 1;
-	}
-	public int getNodeStatus() {
-		return this.status;
 	}
 	public int getXPos() {
 		return this.xPos;
