@@ -18,21 +18,25 @@ public class NodeManagement {
 	
 	public boolean isFounded = false;
 	public int stepCount = 0;
+	public int xSize;
+	public int ySize;
 	
-	public NodeManagement(Node[][] nodeArray) {
+	public NodeManagement(Node[][] nodeArray, int x, int y) {
 		this.nodeArray = nodeArray;
 		start = nodeArray[0][0];
-		target = nodeArray[9][9];
+		target = nodeArray[y - 1][x - 1];
+		xSize = x;
+		ySize = y;
 		ResetAll();
 	}
 
+	//setters
 	public void addNeighbourNode(Node node) {
 		neighbourList.add(node);
 	}
 	public void addVisited(Node node) {
 		visitedList.add(node);
 	}
-	
 	public void setNeighbourList(List<Node> neighbourList) {
 		this.neighbourList = neighbourList;
 	}
@@ -66,7 +70,14 @@ public class NodeManagement {
 	public void stepCountNext() {
 		stepCount++;
 	}
+	public void SetNeighbour(Node node, Node parentNode) {
+		node.setBackground(Color.ORANGE);
+		node.setNodeParent(parentNode);
+		neighbourList.add(node);
+	}
 	
+	
+	//getters
 	public List<Node> getNeighbourList() {
 		return neighbourList;
 	}
@@ -91,16 +102,16 @@ public class NodeManagement {
 	public boolean isFounded() {
 		return isFounded;
 	}
-	
 	public Node getNode(int x, int y) {
 		return nodeArray[x][y];
 	}
 	
+	//reset all nodes
 	public void ResetAll() {
 		isFounded = false;
 		//reset nodes
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < ySize; i++) {
+			for (int j = 0; j < xSize; j++) {
 				getNode(j, i).setBackground(Color.WHITE);
 				getNode(j, i).ResetNode();
 			}
@@ -116,19 +127,12 @@ public class NodeManagement {
 		Window window = SingleObject.InstantiateObj().currentWindow;
 	}
 
-	public void SetNeighbour(Node node, Node parentNode) {
-		node.setBackground(Color.ORANGE);
-		node.setNodeParent(parentNode);
-		neighbourList.add(node);
-	}
-	
-
-	//method for step by step pathfinding (default space press)
+	//method for step by step pathfinding (default key space)
 	public void NextStep() {
 		UpdateDistance();
 		Node node = GetLowerNode();
 		if(!isFounded) {
-			//neighbour find
+			//neighbour finder
 			for (int i = -1; i < 2 && !isFounded; i++) {
 				for (int j = -1; j < 2 && !isFounded; j++) {
 					if(node.getXPos() + j >= 0 && node.getXPos() + j < 10 && node.getYPos() + i >= 0 && node.getYPos() + i < 10) {
@@ -164,17 +168,16 @@ public class NodeManagement {
 		SingleObject.InstantiateObj().currentWindow.setStepLabel(stepCount);
 	}
 	
-
+	//update all node distances
 	public void UpdateDistance() {
-
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < ySize; i++) {
+			for (int j = 0; j < xSize; j++) {
 				getNode(j, i).setDistanceFromSource(CalculateDistance(getNode(j, i).getXPos(), getStart().getXPos(), getNode(j, i).getYPos(), getStart().getYPos()));
 			}
 		}
-		
 	}
 	
+	//distance calculator (1.4 = sqrt(2))
 	public float CalculateDistance(int x1, int x2, int y1, int y2) {
 		float distance = 0;
 		float xDistance = abs(x2 - x1);
@@ -196,6 +199,7 @@ public class NodeManagement {
 		return distance;
 	}
 	
+	//lower source distance node
 	public Node GetLowerNode() {
 		Node node = getNeighbourList().get(0);
 		for(Node item : getNeighbourList()) {
@@ -205,15 +209,7 @@ public class NodeManagement {
 		return node;
 	}
 	
-	public int abs(int value){
-		if(value < 0)
-			return (value * -1);
-		return value;
-	}
-	
-
-	
-	//if neighbourList has node
+	//is node neighbour
 	public boolean isNeighbour(Node node) {
 		for(Node item : getNeighbourList()) {
 			if(item == node)
@@ -221,11 +217,18 @@ public class NodeManagement {
 		}
 		return false;
 	}
+	//is node visited
 	public boolean isVisited(Node node) {
 		for(Node item : getVisitedList()) {
 			if(item == node)
 				return true;
 		}
 		return false;
+	}
+	
+	public int abs(int value){
+		if(value < 0)
+			return (value * -1);
+		return value;
 	}
 }

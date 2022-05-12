@@ -18,13 +18,14 @@ public class Node extends JButton{
 		distanceFromSource = 0;
 	}
 	
+	//node reset 
 	public void ResetNode() {
 		parentNode = null;
 		isBlock = false;
 		distanceFromSource = 0;
 	}
 	
-	//getters setters
+	//setters
 	public void setNodePos(int x, int y) {
 		this.xPos = x;
 		this.yPos = y;
@@ -38,6 +39,18 @@ public class Node extends JButton{
 	public void setNodeParent(Node parent) {
 		parentNode = parent;
 	}
+	public void setDistanceFromSource(float value) {
+		distanceFromSource = value;
+	}
+	public void ChangeBlockState() {
+		isBlock = !isBlock;
+		if(isBlock)
+			this.setBackground(Color.BLACK);
+		else
+			this.setBackground(Color.WHITE);
+	}
+	
+	//getters
 	public int getXPos() {
 		return this.xPos;
 	}
@@ -50,18 +63,8 @@ public class Node extends JButton{
 	public void setYPos(int yPos) {
 		this.yPos = yPos;
 	}
-	public void ChangeBlockState() {
-		isBlock = !isBlock;
-		if(isBlock)
-			this.setBackground(Color.BLACK);
-		else
-			this.setBackground(Color.WHITE);
-	}
 	public boolean getBlockState() {
 		return isBlock;
-	}
-	public void setDistanceFromSource(float value) {
-		distanceFromSource = value;
 	}
 	public float getDistanceFromSource() {
 		return distanceFromSource;

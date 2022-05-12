@@ -32,11 +32,12 @@ public class Window{
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		nodeManager = new NodeManagement(NodeMapCreator.CreateNodeMap(xSize, ySize, nodeAction));
+		nodeManager = new NodeManagement(NodeMapCreator.CreateNodeMap(xSize, ySize, nodeAction), xSize, ySize);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(550, 25, 200, 500);
-		panel.setLayout(new GridLayout(10,1));
+		//right panel (info and button)
+		JPanel panelRight = new JPanel();
+		panelRight.setBounds(550, 25, 200, 500);
+		panelRight.setLayout(new GridLayout(10,1));
 
 		//help button
 		JButton helpButton = new JButton("Help");
@@ -46,7 +47,8 @@ public class Window{
 				ShowHelpPane();
 			}
 		});
-		//neighbours button
+		
+		//neighbour nodes 
 		JButton neighbourNodesButton = new JButton("Neighbour Nodes");
 		neighbourNodesButton.addActionListener(new ActionListener() {
 			@Override
@@ -54,6 +56,8 @@ public class Window{
 				ShowNeighbourNodes();
 			}
 		});
+		
+		//visited nodes
 		JButton visitedNodesButton = new JButton("Visited Nodes");
 		visitedNodesButton.addActionListener(new ActionListener() {
 			@Override
@@ -62,31 +66,47 @@ public class Window{
 			}
 		});
 		
+		//status label
 		statusLabel = new JLabel();
 		setStatusLabel("NODE INFO");
 		
+		//step label
 		stepLabel = new JLabel();
 		stepLabel.setText("Step 0");
 
-		InitWindow();
+		//nodes panel add (left panel)
+		JPanel panelNodes = new JPanel();
+		panelNodes.setBounds(25, 25, 500, 500);
+		panelNodes.setLayout(new GridLayout(10,10));
 		
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
+				panelNodes.add(nodeManager.getNode(i, j));
+			}
+		}
+		
+		//start label
 		startLabel = new JLabel();
 		startLabel.setText("Start Node : (" + nodeManager.getStart().getXPos() + ", " + nodeManager.getStart().getYPos() + ")");
 		
+		//target label
 		targetLabel = new JLabel();
 		targetLabel.setText("Target Node : (" + nodeManager.getTarget().getXPos() + ", " + nodeManager.getTarget().getYPos() + ")");
 
-
-		panel.add(statusLabel);
-		panel.add(stepLabel);
-		panel.add(startLabel);
-		panel.add(targetLabel);
-		panel.add(helpButton);
-		panel.add(neighbourNodesButton);
-		panel.add(visitedNodesButton);
-		frame.add(panel);
+		//add panel all components
+		panelRight.add(statusLabel);
+		panelRight.add(stepLabel);
+		panelRight.add(startLabel);
+		panelRight.add(targetLabel);
+		panelRight.add(helpButton);
+		panelRight.add(neighbourNodesButton);
+		panelRight.add(visitedNodesButton);
+		frame.add(panelRight);
+		frame.add(panelNodes);
+		frame.show();
 	}
 	
+	//label setters
 	public void setStepLabel(int step) {
 		stepLabel.setText("Step : " + step);
 	}
@@ -100,23 +120,7 @@ public class Window{
 		startLabel.setText("Start Node : (" + nodeManager.getStart().getXPos() + ", " + nodeManager.getStart().getYPos() + ")");
 	}
 	
-	//create buttons and frame
-	public void InitWindow() {
-		JPanel panel = new JPanel();
-		panel.setBounds(25, 25, 500, 500);
-		panel.setLayout(new GridLayout(10,10));
-		
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				panel.add(nodeManager.getNode(i, j));
-			}
-		}
-		frame.add(panel);
-		frame.show();
-	}
-	
-	
-	
+	//neighbour nodes form
 	private void ShowNeighbourNodes() {
 		if(nodeManager.getNeighbourList().isEmpty()) {
 			JOptionPane.showMessageDialog(frame, "neighbour nodes is empty");
@@ -135,6 +139,8 @@ public class Window{
 		}
 		new NeighbourNodesForm(nodeManager.getStepCount(), neighbours);
 	}
+	
+	//visited nodes form
 	private void ShowVisitedNodes() {
 		if(nodeManager.getVisitedList().isEmpty()) {
 			JOptionPane.showMessageDialog(frame, "visited nodes is empty");
@@ -154,7 +160,7 @@ public class Window{
 		new NeighbourNodesForm(nodeManager.getStepCount(), visitedNodes);
 	}
 	
-	//help panel
+	//help pane
 	public void ShowHelpPane() {
 		JOptionPane.showMessageDialog(frame, "T : Select new target node"
 				+ "\nS : Select new start node"

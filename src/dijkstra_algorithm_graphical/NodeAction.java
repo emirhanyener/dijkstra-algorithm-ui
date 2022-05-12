@@ -10,7 +10,6 @@ public class NodeAction {
 	
 	public NodeAction() {
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
-			
 			@Override
 			public boolean dispatchKeyEvent(KeyEvent e) {
 				if(e.getID() == KeyEvent.KEY_PRESSED) {
@@ -38,10 +37,12 @@ public class NodeAction {
 		});
 	}
 	
+	//all nodes action
 	public void NodeClick(Node node) {
 		nodeAction.NodeEvent(node);
 	}
 	
+	//add event
 	public void AddNodeAction(int _key, INodeAction _nodeAction, String _info) {
 		nodeActionList.Add(_key, _nodeAction, _info);
 	}

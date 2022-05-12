@@ -6,6 +6,7 @@ public class NodeActionList {
 	public String info;
 	public NodeActionList next;
 	
+	//action list add item
 	public void Add(int _key, INodeAction _nodeAction, String _info) {
 		if(next == null) {
 			NodeActionList newAction = new NodeActionList();

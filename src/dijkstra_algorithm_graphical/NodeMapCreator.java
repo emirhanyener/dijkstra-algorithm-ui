@@ -12,6 +12,7 @@ public class NodeMapCreator {
 		
 	}
 
+	//return node map (with panel)
 	public static JPanel CreateNodeMapPanel(int xSize, int ySize){
 		Node[][] nodeArray = new Node[ySize][xSize];
 		JPanel panel = new JPanel();
@@ -37,10 +38,10 @@ public class NodeMapCreator {
 		}
 		return panel;
 	}
+
+	//return node map (no panel)
 	public static Node[][] CreateNodeMap(int xSize, int ySize, NodeAction nodeAction){
 		Node[][] nodeArray = new Node[ySize][xSize];
-		//NodeAction nodeAction = new NodeAction();
-		
 		for (int i = 0; i < ySize; i++) {
 			for (int j = 0; j < xSize; j++) {
 				Node node = new Node();
