@@ -31,6 +31,7 @@ public class Window{
 		frame.setBounds(50, 50, 800, 600);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setJMenuBar(new WindowMenu());
 		
 		nodeManager = new NodeManagement(NodeMapCreator.CreateNodeMap(xSize, ySize, nodeAction), xSize, ySize);
 		

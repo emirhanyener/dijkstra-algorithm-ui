@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
 public class Main {
 	private NodeAction nodeAction = new NodeAction();
 	private Node nodeArray[][];
@@ -22,7 +25,8 @@ public class Main {
 	}
 	
 	public void CreateWindow() {
+		//default window creation
 		window = new Window(10, 10, nodeAction);
-		SingleObject.InstantiateObj().currentWindow = window;
+		SingleObject.InstantiateObj().setCurrentWindow(window);
 	}
 }

@@ -124,7 +124,7 @@ public class NodeManagement {
 		visitedList.clear();
 		SetNeighbour(start, null);
 		stepCount = 0;
-		Window window = SingleObject.InstantiateObj().currentWindow;
+		Window window = SingleObject.InstantiateObj().getCurrentWindow();
 	}
 
 	//method for step by step pathfinding (default key space)
@@ -165,7 +165,7 @@ public class NodeManagement {
 			setTempNode(getTempNode().getNodeParent());
 			stepCountNext();
 		}
-		SingleObject.InstantiateObj().currentWindow.setStepLabel(stepCount);
+		SingleObject.InstantiateObj().getCurrentWindow().setStepLabel(stepCount);
 	}
 	
 	//update all node distances

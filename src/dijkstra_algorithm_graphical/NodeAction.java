@@ -14,10 +14,10 @@ public class NodeAction {
 			public boolean dispatchKeyEvent(KeyEvent e) {
 				if(e.getID() == KeyEvent.KEY_PRESSED) {
                     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                		SingleObject.InstantiateObj().currentWindow.getNodeManager().NextStep();
+                		SingleObject.InstantiateObj().getCurrentWindow().getNodeManager().NextStep();
                     }
                     if (e.getKeyCode() == KeyEvent.VK_R) {
-                		SingleObject.InstantiateObj().currentWindow.getNodeManager().ResetAll();
+                		SingleObject.InstantiateObj().getCurrentWindow().getNodeManager().ResetAll();
                     }
                     NodeActionListIterator actions = new NodeActionListIterator(nodeActionList);
                     
@@ -27,7 +27,7 @@ public class NodeAction {
                     	}
                     	if(e.getKeyCode() == actions.Current().key) {
                     		nodeAction = actions.Current().nodeAction;
-                        	SingleObject.InstantiateObj().currentWindow.setStatusLabel(actions.Current().info);
+                        	SingleObject.InstantiateObj().getCurrentWindow().setStatusLabel(actions.Current().info);
                     	}
                     	actions.Next();
                     }
