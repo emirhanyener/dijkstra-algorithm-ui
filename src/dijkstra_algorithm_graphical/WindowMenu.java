@@ -17,12 +17,12 @@ public class WindowMenu extends JMenuBar{
 		newWindow.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
+				newWindowEvent();
 			}
 		});
 	}
 	
 	public void newWindowEvent() {
-		
+		new NewWindowForm();
 	}
 }
