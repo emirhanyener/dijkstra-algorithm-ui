@@ -9,6 +9,7 @@ public class NodeAction {
 	private INodeAction nodeAction = new NodeActionInfo();
 	
 	public NodeAction() {
+		/*
 		KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(new KeyEventDispatcher() {
 			@Override
 			public boolean dispatchKeyEvent(KeyEvent e) {
@@ -34,7 +35,7 @@ public class NodeAction {
 				}
 				return true;
 			}
-		});
+		});*/
 	}
 	
 	//all nodes action

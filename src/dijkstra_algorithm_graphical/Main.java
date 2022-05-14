@@ -13,11 +13,12 @@ public class Main {
 	private Window window;
 	
 	public Main() {
-		CreateWindow();
 		nodeAction.AddNodeAction(KeyEvent.VK_T, new NodeActionTarget(), "Target Node");
 		nodeAction.AddNodeAction(KeyEvent.VK_S, new NodeActionStart(), "Start Node");
 		nodeAction.AddNodeAction(KeyEvent.VK_B, new NodeActionBlock(), "Node Block");
 		nodeAction.AddNodeAction(KeyEvent.VK_I, new NodeActionInfo(), "Node Info");
+		SingleObject.InstantiateObj().setNodeAction(nodeAction);
+		CreateWindow();
 	}
 	
 	public static void main(String[] args) {
@@ -26,7 +27,7 @@ public class Main {
 	
 	public void CreateWindow() {
 		//default window creation
-		window = new Window(10, 10, nodeAction);
+		window = new Window(10, 10);
 		SingleObject.InstantiateObj().setCurrentWindow(window);
 	}
 }

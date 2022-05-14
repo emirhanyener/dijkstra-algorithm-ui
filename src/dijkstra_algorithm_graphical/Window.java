@@ -26,14 +26,14 @@ public class Window{
 	}
 	
 	//init
-	public Window(int xSize, int ySize, NodeAction nodeAction) {
+	public Window(int xSize, int ySize) {
 		frame = new JFrame("Dijkstra's Shortest Path Algorithm");
 		frame.setBounds(50, 50, 800, 600);
 		frame.setLayout(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setJMenuBar(new WindowMenu());
 		
-		nodeManager = new NodeManagement(NodeMapCreator.CreateNodeMap(xSize, ySize, nodeAction), xSize, ySize);
+		nodeManager = new NodeManagement(NodeMapCreator.CreateNodeMap(xSize, ySize, SingleObject.InstantiateObj().getNodeAction()), xSize, ySize);
 		
 		//right panel (info and button)
 		JPanel panelRight = new JPanel();
@@ -119,6 +119,10 @@ public class Window{
 	}
 	public void SetStartLabel(String pos) {
 		startLabel.setText("Start Node : (" + nodeManager.getStart().getXPos() + ", " + nodeManager.getStart().getYPos() + ")");
+	}
+	
+	public JFrame getFrame() {
+		return frame;
 	}
 	
 	//neighbour nodes form
