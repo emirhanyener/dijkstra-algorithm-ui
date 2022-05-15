@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -10,9 +11,11 @@ public class FileManager {
 		
 	}
 	
+	public static String folderName = ".\\data\\";
+	
 	public static void Write(String fileName, String value) {
 		try {
-			FileWriter writer = new FileWriter(".\\data\\" + fileName);
+			FileWriter writer = new FileWriter(folderName + fileName);
 			writer.write(value);
 			writer.close();
 		} 
@@ -23,7 +26,7 @@ public class FileManager {
 	
 	public static String Read(String fileName) {
 		try {
-			FileReader reader = new FileReader(".\\data\\" + fileName);
+			FileReader reader = new FileReader(folderName + fileName);
 			String temp = "";
 			int c = 0;
 			try {
@@ -40,5 +43,12 @@ public class FileManager {
 			e.printStackTrace();
 		}
 		return "";
+	}
+	
+	public static boolean isExists(String fileName) {
+		File file = new File(folderName + fileName);
+		if(file.exists())
+			return true;
+		return false;
 	}
 }
