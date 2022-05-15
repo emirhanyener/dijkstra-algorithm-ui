@@ -44,6 +44,7 @@ public class Window implements KeyListener, ActionListener{
 
 		//help button
 		JButton helpButton = new JButton("Help");
+		helpButton.setRequestFocusEnabled(false);
 		helpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -53,6 +54,7 @@ public class Window implements KeyListener, ActionListener{
 		
 		//neighbour nodes 
 		JButton neighbourNodesButton = new JButton("Neighbour Nodes");
+		neighbourNodesButton.setRequestFocusEnabled(false);
 		neighbourNodesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -62,6 +64,7 @@ public class Window implements KeyListener, ActionListener{
 		
 		//visited nodes
 		JButton visitedNodesButton = new JButton("Visited Nodes");
+		visitedNodesButton.setRequestFocusEnabled(false);
 		visitedNodesButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

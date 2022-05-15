@@ -47,6 +47,7 @@ public class NodeMapCreator {
 				Node node = new Node();
 				node.setXPos(j);
 				node.setYPos(i);
+				node.setRequestFocusEnabled(false);
 				nodeArray[j][i] = node;
 				nodeArray[j][i].setBackground(Color.WHITE);
 				node.addActionListener(new ActionListener() {
