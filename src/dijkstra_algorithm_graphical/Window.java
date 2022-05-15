@@ -80,10 +80,10 @@ public class Window implements KeyListener, ActionListener{
 		//nodes panel add (left panel)
 		JPanel panelNodes = new JPanel();
 		panelNodes.setBounds(25, 25, 500, 500);
-		panelNodes.setLayout(new GridLayout(10,10));
+		panelNodes.setLayout(new GridLayout(xSize,ySize));
 		
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < ySize; i++) {
+			for (int j = 0; j < xSize; j++) {
 				panelNodes.add(nodeManager.getNode(i, j));
 			}
 		}

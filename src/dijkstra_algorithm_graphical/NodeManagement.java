@@ -135,7 +135,7 @@ public class NodeManagement {
 			//neighbour finder
 			for (int i = -1; i < 2 && !isFounded; i++) {
 				for (int j = -1; j < 2 && !isFounded; j++) {
-					if(node.getXPos() + j >= 0 && node.getXPos() + j < 10 && node.getYPos() + i >= 0 && node.getYPos() + i < 10) {
+					if(node.getXPos() + j >= 0 && node.getXPos() + j < ySize && node.getYPos() + i >= 0 && node.getYPos() + i < xSize) {
 						if(getNode(node.getXPos() + j, node.getYPos() + i).getBlockState())
 							continue;
 						if(getNode(node.getXPos() + j, node.getYPos() + i) == getTarget()){

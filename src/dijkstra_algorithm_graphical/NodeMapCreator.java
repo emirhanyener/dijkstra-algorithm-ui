@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 
 public class NodeMapCreator {
-	public NodeMapCreator() {
+	private NodeMapCreator() {
 		
 	}
 
@@ -20,8 +20,8 @@ public class NodeMapCreator {
 		panel.setLayout(new GridLayout(10,10));
 		NodeAction nodeAction = new NodeAction();
 		
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
+		for (int i = 0; i < ySize; i++) {
+			for (int j = 0; j < xSize; j++) {
 				Node node = new Node();
 				node.setXPos(j);
 				node.setYPos(i);
