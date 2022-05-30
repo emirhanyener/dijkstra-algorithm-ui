@@ -23,7 +23,6 @@ public class Main {
 	private Window window;
 	
 	public Main() {
-		FileManager.Write("test.txt", "addsa");
 		nodeAction.AddNodeAction(KeyEvent.VK_T, new NodeActionTarget(), "Target Node");
 		nodeAction.AddNodeAction(KeyEvent.VK_S, new NodeActionStart(), "Start Node");
 		nodeAction.AddNodeAction(KeyEvent.VK_B, new NodeActionBlock(), "Node Block");

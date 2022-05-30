@@ -34,6 +34,7 @@ public class Window implements KeyListener, ActionListener{
 		frame.setJMenuBar(new WindowMenu());
 		frame.addKeyListener(SingleObject.InstantiateObj().getNodeAction());
 		frame.setFocusable(true);
+
 		
 		nodeManager = new NodeManagement(NodeMapCreator.CreateNodeMap(xSize, ySize, SingleObject.InstantiateObj().getNodeAction()), xSize, ySize);
 		
